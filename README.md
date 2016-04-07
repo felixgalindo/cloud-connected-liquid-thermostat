@@ -8,6 +8,8 @@ Raspberry PI 2 nodejs app that regulates the liquid temperature and plots liquid
 * Water Well Tanks
 * And More!
 
+<img src="http://i.imgur.com/JtbtZLYh.jpg" width="600px">
+
 [Check out the graphs!](https://plot.ly/~felixgalindo91/folder/home)
 
 ##Parts you'll need:
@@ -25,6 +27,8 @@ Raspberry PI 2 nodejs app that regulates the liquid temperature and plots liquid
 
 
 ##Hardware Installation Instructions:
+
+<img src="http://i.imgur.com/9tz37qVh.jpg" width="600px">
 
 Wire up the sensors as shown here: 
 
