@@ -30,7 +30,20 @@ Raspberry PI 2 nodejs app that regulates the liquid temperature and plots liquid
 
 <img src="http://i.imgur.com/9tz37qVh.jpg" width="600px">
 
-Wire up the sensors as shown here: 
+###Wire up the ADS1115 to the Pi:
+ADS1115     --->     Pi
+
+###Wire up the Relay Module to the Pi:
+Relay Module  --->     Pi
+
+###Wire up the DS18B20 to the Pi:
+ADS1115     --->     Pi
+
+###Wire up the ADS1115 to the eTape sensor:
+ADS1115     --->     eTape
+
+###Wire up the heater to the Relay Module:
+Relay Module  --->     Heater
 
 ##Software Installation Instructions:
 These instructions have been tested with the latest version of Raspian on a Raspberry PI 2B with Nodejs 4 and with internet connection. SSH into your pi and follow the instructions below.
@@ -53,6 +66,17 @@ Reboot the Pi:
 ```
 sudo reboot
 ```
+
+Get your ds18b20 serial number by running:
+
+```
+sudo modprobe w1-gpio
+sudo modprobe w1-therm
+cd /sys/bus/w1/devices/
+ls
+```
+You should see something a number that starts with 28- like 28-80000003a557. If you dont, check your wiring and
+make sure you followed all the steps above. Make note of this number as this is your ds18b20 serial number you will need to configure the app.
 
 ###Setup the ADS1115 
 ####Install smbus and i2c tools
@@ -119,8 +143,10 @@ Clone the cloud-connected-liquid-thermostat repo:
 ```
 git clone https://github.com/felixgalindo/cloud-connected-liquid-thermostat.git
 ```
-Modify the cloud-connected-liquid-thermostat config file to use your desired settings or leave the defaults.       
-Make sure you change the plotlyUsername and plotlyApiKey to match your plotly account.
+
+Modify the cloud-connected-liquid-thermostat config file to use your desired settings.       
+Make sure you at least change the plotlyUsername and plotlyApiKey to match your plotly account.
+Also change ds18b20Id to match your ds18b20 serial number.
 
 ```
 sudo nano ./cloud-connected-liquid-thermostat/cloud-connected-liquid-thermostat/config/index.js 
