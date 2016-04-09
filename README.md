@@ -18,7 +18,7 @@ Raspberry PI 2 nodejs app that regulates the liquid temperature and plots liquid
 * <a href="https://www.adafruit.com/product/1085">ADS1115</a> 16-Bit ADC 
 * <a href="http://www.amazon.com/TOOGOO-Module-Development-Appliance-Control/dp/B00TO7IY76/ref=sr_1_1?s=pc&ie=UTF8&qid=1460039137&sr=1-1&keywords=TOOGOO+relay">DC 5V Coil Relay Module</a> 
 * <a href="https://www.adafruit.com/products/464">12" eTape Liquid Level Sensor</a>
-* Liquid Heater( I used a <a href="https://www.adafruit.com/product/1085">Aquarium Heater</a> )
+* Liquid Heater( I used a <a href="http://www.amazon.com/Fluval-M-200-Watt-Submersible-Heater/dp/B0027VQ0WM/ref=sr_1_37?s=pet-supplies&ie=UTF8&qid=1460183445&sr=1-37">Aquarium Heater</a> )
 * Breadboard
 * Jumper Cables
 * 10 KOhm Resistor
