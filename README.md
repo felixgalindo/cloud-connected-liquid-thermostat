@@ -22,31 +22,45 @@ Raspberry PI 2 nodejs app that regulates the liquid temperature and plots liquid
 * Breadboard
 * Jumper Cables
 * 10 KOhm Resistor
-* (2) 1 KOhm Resistor
-* And a container with liquid of course (tall enough for the eTape sensor and your heater to fit). 
+* (2) 1 KOhm Resistor  
+* And a container with liquid of course (tall enough for the eTape sensor and your heater to fit).   
+
+##Hardware Installation Instructions:  
+
+<img src="http://i.imgur.com/9tz37qVh.jpg" width="600px">  
+ 
+###Wire up the ADS1115:
+ADS1115 (Pin 1 Vdd)    --->     Pi (Pin 4 5V)    
+ADS1115 (Pin 2 Gnd)    --->     Pi (Pin 6 Gnd)    
+ADS1115 (Pin 3 SCL)    --->     Pi (Pin 3 SDA1)  
+ADS1115 (Pin 4 SDA)    --->     Pi (Pin 5 SCL1)    
 
 
-##Hardware Installation Instructions:
+###Wire up the Relay Module:
+Relay Module (Pin 1 Signal)   --->  Pi (Pin 40)  
+Relay Module (Pin 2 V+)       --->  Pi (Pin 2 5v)  
+Relay Module (Pin 3 GND)      --->  Pi (Pin 20 GND)  
 
-<img src="http://i.imgur.com/9tz37qVh.jpg" width="600px">
+###Wire up the DS18B20:
+DS18B20 (Data Wire)     --->     Pi (Pin 7 1-Wire)  (with 10Kohm pull up resistor to Pi Pin 1 3.3V)  
+DS18B20 (V+)            --->     Pi (Pin 1 3.3V)  
+DS18B20 (Gnd)           --->     Pi (Pin 20 GND)  
 
-###Wire up the ADS1115 to the Pi:
-ADS1115     --->     Pi
-
-###Wire up the Relay Module to the Pi:
-Relay Module  --->     Pi
-
-###Wire up the DS18B20 to the Pi:
-ADS1115     --->     Pi
-
-###Wire up the ADS1115 to the eTape sensor:
-ADS1115     --->     eTape
+###Wire up the Etape:  
+ADS1115 (Pin 7 A0)     --->     eTape (Pin 1)   
+eTape (Pin 1)          --->     1K ohm ---> Pi (Pin 2 5v)   (voltage divider circuit)  
+ADS1115 (Pin 8 A1)     --->     eTape (Pin 2)  
+eTape (Pin 2)          --->     1K ohm ---> Pi (Pin 2 5v)   (voltage divider circuit)    
+eTape (Pin 3 & Pin 4)  --->     Pi (Pin 9 Gnd)  
 
 ###Wire up the heater to the Relay Module:
-Relay Module  --->     Heater
+Splice Common wire on heater.
+Connect 1 end of spliced wire to Relay Output Pin 1.  
+Connect the other end of spliced wire to Relay Output Pin 2.  
+Connect heater power cord power source(eg. 120v ac wall outlet).  
 
 ##Software Installation Instructions:
-These instructions have been tested with the latest version of Raspian on a Raspberry PI 2B with Nodejs 4 and with internet connection. SSH into your pi and follow the instructions below.
+These instructions have been tested with the latest version of Raspian on a Raspberry PI 2B with Nodejs 4 and with internet connection.  SSH into your pi and follow the instructions below.  
 
 ###Setup the DSB18B20 
 
@@ -56,7 +70,7 @@ These instructions have been tested with the latest version of Raspian on a Rasp
 sudo nano /boot/config.txt
 ```
 
-Add the following line to the end of the file:
+Add the following line to the end of the file:  
 ```
 dtoverlay=w1-gpio
 ```
@@ -67,7 +81,7 @@ Reboot the Pi:
 sudo reboot
 ```
 
-Get your ds18b20 serial number by running:
+Get your ds18b20 serial number by running:  
 
 ```
 sudo modprobe w1-gpio
@@ -75,8 +89,9 @@ sudo modprobe w1-therm
 cd /sys/bus/w1/devices/
 ls
 ```
-You should see something a number that starts with 28- like 28-80000003a557. If you dont, check your wiring and
-make sure you followed all the steps above. Make note of this number as this is your ds18b20 serial number you will need to configure the app.
+You should see something a number that starts with 28- like 28-80000003a557. If you dont, check your wiring and  
+make sure you followed all the steps above. Make note of this number as this is your ds18b20 serial number you will   
+need to configure the app.  
 
 ###Setup the ADS1115 
 ####Install smbus and i2c tools
@@ -100,19 +115,19 @@ i2c-bcm2708
 i2c-dev
 ```
 
-Depending on your distribution, you may also have a file called /etc/modprobe.d/raspi-blacklist.conf
+Depending on your distribution, you may also have a file called /etc/modprobe.d/raspi-blacklist.conf  
 
-If you do not have this file then there is nothing to do, however, if you do have this file, run :
+If you do not have this file then there is nothing to do, however, if you do have this file, run :  
 
 ```
 sudo nano /etc/modprobe.d/raspi-blacklist.conf
 ```
 
-And comment/remove the following lines:
+And comment/remove the following lines:  
 
 ```
-blacklist spi-bcm2708
-blacklist i2c-bcm2708
+blacklist spi-bcm2708  
+blacklist i2c-bcm2708  
 ```
 
 If you are running a recent Raspberry Pi (3.18 kernel or higher) you will also need to update the /boot/config.txt file. Edit it with: 
@@ -120,7 +135,7 @@ If you are running a recent Raspberry Pi (3.18 kernel or higher) you will also n
 sudo nano /boot/config.txt
 ```
 
-And add the following lines:
+And add the following lines:  
 
 ```
 dtparam=i2c1=on
